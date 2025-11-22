@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "UBFC Plotly Debug",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/UBFC_sequence_viz_plotly.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "--seq", "vid_1",
+                "--root", "D:/Data/UBFC/Dataset_3"
+            ],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+        }
+    ]
+}
