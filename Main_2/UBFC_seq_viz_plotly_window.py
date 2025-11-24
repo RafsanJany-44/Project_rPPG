@@ -3,12 +3,11 @@
 from pathlib import Path
 import argparse
 
-# If your main file is named UBFC_sequence_viz_plotly.py, use this import:
 from UBFC_Start_End_Seq import (
     prepare_full_signals,
     UBFC_ROOT,
     WIN_LEN,
-    PADDING,
+    PADDING,      
 )
 
 from plot_me import make_window_plot_with_pairs
@@ -18,26 +17,23 @@ def main():
     parser = argparse.ArgumentParser(
         description=(
             "UBFC visualization for a user-defined window INDEX.\n"
-            "Window timing is computed as:\n"
-            "  t_start = overlap_start + padding + win_idx * WIN_LEN\n"
-            "  t_end   = t_start + WIN_LEN"
+            "Window timing is computed as (same as Step-1 analysis):\n"
+            "  base_start = overlap_start + padding\n"
+            "  t_start(k) = base_start + k * stride\n"
+            "  t_end(k)   = t_start(k) + win_len"
         )
     )
     parser.add_argument(
         "--seq",
         type=str,
         required=True,
-        help="Sequence ID, for example vid_1, vid_15, vid_20.",
+        help="Sequence ID, for example vid_1, vid_14, vid_25.",
     )
     parser.add_argument(
         "--win_idx",
         type=int,
         required=True,
-        help=(
-            "Window index (0-based). "
-            "win_idx=0 → first window; "
-            "win_idx=1 → next window; etc."
-        ),
+        help="Window index (0-based) from the per-window lag summary.",
     )
     parser.add_argument(
         "--root",
@@ -57,18 +53,23 @@ def main():
         default=4.0,
         help="Local window length (seconds) for per-frame lag estimation.",
     )
-    # Optional overrides, but by default we use global WIN_LEN and PADDING
     parser.add_argument(
         "--win_len",
         type=float,
         default=WIN_LEN,
-        help="Window length in seconds (default = global WIN_LEN).",
+        help="Window length in seconds (default = global WIN_LEN = 8.0).",
     )
     parser.add_argument(
         "--padding",
         type=float,
         default=PADDING,
-        help="Padding from overlap start in seconds (default = global PADDING).",
+        help="Padding from overlap start in seconds (default = global PADDING = 1.0).",
+    )
+    parser.add_argument(
+        "--stride",
+        type=float,
+        default=1,
+        help="Stride between windows in seconds (default = global WIN_STRIDE = 1.0).",
     )
 
     args = parser.parse_args()
@@ -80,10 +81,13 @@ def main():
 
     win_len = float(args.win_len)
     padding = float(args.padding)
+    stride = float(args.stride)
 
     print(f"\n=== UBFC Plotly window visualization (by index) for {seq_id} ===")
-    print(f"UBFC root: {root}")
-    print(f"WIN_LEN = {win_len:.3f} s, PADDING = {padding:.3f} s")
+    print(f"UBFC root : {root}")
+    print(f"WIN_LEN   = {win_len:.3f} s")
+    print(f"PADDING   = {padding:.3f} s")
+    print(f"STRIDE    = {stride:.3f} s")
     print(f"Requested window index: {win_idx}")
 
     # 1) Prepare full overlap signals (GT + CHROM)
@@ -92,9 +96,9 @@ def main():
     overlap_start = info["overlap_start"]
     overlap_end = info["overlap_end"]
 
-    # 2) Compute time range for this window index (Option C)
+    # 2) Compute time range for this window index (using same policy as analysis)
     base_start = overlap_start + padding
-    t_start = base_start + win_idx * win_len
+    t_start = base_start + win_idx * stride
     t_end = t_start + win_len
 
     print(
@@ -110,17 +114,9 @@ def main():
             f"Computed window is [{t_start:.3f}, {t_end:.3f}] s."
         )
 
-    # 4) Build detailed visualizations for this window
+    # 4) Build detailed visualization (GT vs CHROM + pair CSV + local lag curve)
     label = f"win{win_idx}"
-
-    make_window_plot_with_pairs(
-        info=info,
-        t_start=t_start,
-        t_end=t_end,
-        label=label,
-        out_dir=out_dir,
-        local_win_seconds=float(args.local_win),
-    )
+    out_dir.mkdir(parents=True, exist_ok=True)
 
     make_window_plot_with_pairs(
         info=info,

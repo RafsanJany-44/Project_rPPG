@@ -309,5 +309,6 @@ def main():
             f"  windows used    = {valid_mask.sum()} of {len(df)}"
         )
 
+
 if __name__ == "__main__":
     main()
