@@ -25,9 +25,8 @@ from rPPG_Algorithm_Cell import rppg_chrom, bandpass_zero_phase
 
 
 
-
-#UBFC_ROOT = Path(r"D:\Data\UBFC\Dataset_3")
-UBFC_ROOT = Path("/media/data/rPPG/rPPG_Data/UBFC_rPPG")
+UBFC_ROOT = Path(r"D:\Data\UBFC\Dataset_3")
+#UBFC_ROOT = Path("/media/data/rPPG/rPPG_Data/UBFC_rPPG")
 WIN_LEN = 8.0
 PADDING = 1.0
 ROI_FRAC = 0.5
