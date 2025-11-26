@@ -30,7 +30,7 @@ UBFC_ROOT = Path(r"D:\Data\UBFC\Dataset_3")
 WIN_LEN = 8.0
 PADDING = 1.0
 ROI_FRAC = 0.5
-ROI_MODE = "opencv_face"  # "central", "opencv_face", or "mediapipe_face"
+ROI_MODE = "mediapipe_face"  # "central", "opencv_face", or "mediapipe_face"
 
 
 
@@ -52,8 +52,6 @@ def build_roi_extractor():
         )
     else:
         raise ValueError(f"Unknown ROI_MODE: {ROI_MODE}")
-
-
 
 
 
