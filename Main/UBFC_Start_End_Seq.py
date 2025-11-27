@@ -100,6 +100,7 @@ def prepare_full_signals(seq_id: str, root: Path):
 
     #roi = CentralRoiExtractor(frac=ROI_FRAC)
     roi = build_roi_extractor()
+    
 
     t_frame_full, rgb_full = extract_rgb_timeseries(
         source=source,
