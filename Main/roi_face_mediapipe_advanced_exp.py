@@ -36,19 +36,21 @@ ROI_SHAPES: List[Dict[str, Any]] = [
         "name": "forehead_strip",
         "type": "polygon",
         # Approximate forehead band using FaceMesh indices
-        "indices": [10, 338, 297, 332, 284, 109, 67, 103, 54],
+        #"indices": [10, 338, 297, 332, 284, 109, 67, 103, 54],
+        "indices": [10, 338, 297, 332, 284, 251, 389, 356, 454, 323, 361, 288, 397, 365, 379, 400, 152, 148, 149, 176, 150, 136, 172, 58, 132, 93, 234, 127, 162, 21],
     },
-    {
-        "name": "left_cheek_big",   # viewer's left cheek (subject's right)
-        "type": "polygon",
-        "indices": [234, 93, 132, 58, 172, 136, 150, 176],
-    },
-    {
-        "name": "right_cheek_big",  # viewer's right cheek (subject's left)
-        "type": "polygon",
-        "indices": [454, 323, 361, 288, 397, 365, 379, 400],
-    },
-
+    
+    #{
+    #   "name": "left_cheek_big",   # viewer's left cheek (subject's right)
+    #    "type": "polygon",
+    #    "indices": [234, 93, 132, 58, 172, 136, 150, 176],
+    #},
+    #{
+    #    "name": "right_cheek_big",  # viewer's right cheek (subject's left)
+    #    "type": "polygon",
+    #    "indices": [454, 323, 361, 288, 397, 365, 379, 400],
+    #},
+    
     # Example: small triangle patch on nose (can remove if not needed)
     # {
     #     "name": "nose_triangle",
