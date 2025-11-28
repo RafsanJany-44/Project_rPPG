@@ -63,7 +63,6 @@ class OpenCVFaceBoxRoi(RoiExtractor):
         )
 
         if len(faces) == 0:
-            # Fallback: return full frame (you can also fallback to Central ROI)
             return img_bgr
 
         # Pick the largest detected face

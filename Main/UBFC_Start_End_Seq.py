@@ -44,7 +44,6 @@ def build_roi_extractor():
     
     elif ROI_MODE == "mediapipe_face":
         # We use MediaPipe facial landmarks and define a region
-        # (for example forehead + cheeks; adjust args based on your class)
         return MediaPipeFaceRegionsRoi(
             use_forehead=True,
             use_left_cheek=True,

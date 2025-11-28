@@ -7,7 +7,7 @@ We build a more precise region based on facial landmarks:
 - Left cheek
 - Right cheek
 
-The user can choose which subregions to include via flags.
+
 """
 
 from typing import Tuple, List
@@ -81,7 +81,6 @@ class MediaPipeFaceRegionsRoi(RoiExtractor):
         # Pre-defined landmark index sets
         # These come from the MediaPipe Face Mesh topology.
         # They are not perfect anatomically, but are reasonable approximations.
-        # You can tweak / add indices as needed.
         self.forehead_indices = [
             10,   # mid-upper forehead
             338,  # right-upper forehead
@@ -103,6 +102,7 @@ class MediaPipeFaceRegionsRoi(RoiExtractor):
         self.right_cheek_indices = [
             454, 323, 361, 288, 397, 365, 379, 400
         ]
+
 
     # -----------------------
     # Internal helpers
@@ -206,3 +206,5 @@ class MediaPipeFaceRegionsRoi(RoiExtractor):
 
         roi = img_bgr[y_min:y_max, x_min:x_max, :]
         return roi
+
+

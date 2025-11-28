@@ -48,7 +48,6 @@ def main():
     print(f"\n=== UBFC full-length Plotly visualization for {seq_id} ===")
     print(f"UBFC root: {root}")
 
-    # 1) Load full overlap signals (GT + CHROM) using your existing function
     info = prepare_full_signals(seq_id, root)
 
     overlap_start = info["overlap_start"]

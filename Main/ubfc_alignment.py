@@ -2,7 +2,6 @@
 """
 Helpers for UBFC GT PPG + video alignment.
 
-Reuses your existing ubfc_gt_io.load_ubfc_ground_truth, and provides:
 - timestamp fixing (non-strictly increasing),
 - convenience loader,
 - generic interpolation helper.
@@ -56,7 +55,6 @@ def ubfc_align_ppg_to_frame_times(
     """
     Align UBFC GT PPG to video frame timestamps using interpolation.
 
-    Equivalent to your repeated np.interp usage.
 
     Parameters
     ----------

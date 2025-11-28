@@ -8,13 +8,12 @@ import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-# Re-use your existing data preparation function and root path
+
 from UBFC_Start_End_Seq import (
     prepare_full_signals,
     UBFC_ROOT,
 )
 
-# Re-use the global lag estimator from your plotting helpers
 from plot_me import estimate_global_lag
 
 
@@ -67,7 +66,6 @@ def compute_window_lags(
             rppg_win = rppg_full[mask]
 
             dt_win = float(np.mean(np.diff(t_win)))
-            # Compute global lag using your existing function
             lag_sec, lag_frames, _, _ = estimate_global_lag(
                 s_rppg=rppg_win,
                 s_ppg=ppg_win,
