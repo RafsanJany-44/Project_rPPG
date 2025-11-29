@@ -12,18 +12,58 @@ from ubfc_dataset import UBFCFrameSource
 from roi_central import CentralRoiExtractor
 from roi_face_opencv import OpenCVFaceBoxRoi
 from roi_face_mediapipe import MediaPipeFaceRegionsRoi
+from roi_face_mediapipe_advanced_full_face import MediaPipeFaceMeshRoi
 from rgb_extractor import extract_rgb_timeseries
 from rPPG_Algorithm_Cell import rppg_chrom, bandpass_zero_phase
 
 
-#UBFC_ROOT = Path(r"D:\Data\UBFC\Dataset_3")
-UBFC_ROOT = Path("/media/data/rPPG/rPPG_Data/UBFC_rPPG")
+UBFC_ROOT = Path(r"D:\Data\UBFC\Dataset_3")
+#UBFC_ROOT = Path("/media/data/rPPG/rPPG_Data/UBFC_rPPG")
 
 WIN_LEN_SEC = 8.0
 T_START_PADDING = 1.0   # we skip the first 1 s of overlap
 T_END_PADDING = 1.0     # we skip the last 1 s of overlap
 
 ROI_FRAC = 0.5          # we use central 50% x 50% ROI
+
+
+ROI_MODE = "mediapipe_mesh"  # "central", "opencv_face", "mediapipe_face", or "mediapipe_mesh"
+
+
+
+def build_roi_extractor():
+    """
+    Build the ROI extractor according to ROI_MODE.
+
+    Modes
+    -----
+    central        : simple central rectangle.
+    opencv_face    : face bounding box from OpenCV detector.
+    mediapipe_face : earlier rectangular forehead+cheeks region.
+    mediapipe_mesh : advanced free-form mesh-based ROI.
+    """
+    if ROI_MODE == "central":
+        return CentralRoiExtractor(frac=0.5)
+
+    if ROI_MODE == "opencv_face":
+        return OpenCVFaceBoxRoi()
+
+    if ROI_MODE == "mediapipe_face":
+        return MediaPipeFaceRegionsRoi()
+
+    if ROI_MODE == "mediapipe_mesh":
+        # Use default shape configuration from roi_face_mediapipe_advanced.py
+        return MediaPipeFaceMeshRoi(
+            refine_landmarks=False,
+            min_detection_confidence=0.5,
+            min_tracking_confidence=0.5,
+        )
+
+    raise ValueError(f"Unknown ROI_MODE: {ROI_MODE}")
+
+
+
+
 
 
 def _normalize(sig: np.ndarray) -> np.ndarray:
@@ -150,7 +190,7 @@ def compute_edge_lag_metrics_for_sequence(seq_id: str):
         f"End window:   [{t_start_end:.3f}, {t_end_end:.3f}] s"
     )
 
-    roi_extractor = CentralRoiExtractor(frac=ROI_FRAC)
+    roi_extractor = build_roi_extractor()
 
     def _compute_lag_for_window(t_start: float, t_end: float):
         """

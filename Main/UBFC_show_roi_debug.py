@@ -17,7 +17,7 @@ from ubfc_dataset import UBFCFrameSource
 from roi_central import CentralRoiExtractor
 from roi_face_opencv import OpenCVFaceBoxRoi
 from roi_face_mediapipe import MediaPipeFaceRegionsRoi
-from roi_face_mediapipe_advanced_exp import MediaPipeFaceMeshRoi
+from roi_face_mediapipe_advanced_full_face import MediaPipeFaceMeshRoi
 
 # ----- CONFIG -----
 UBFC_ROOT = Path(r"D:\Data\UBFC\Dataset_3")  # adjust if needed
@@ -282,6 +282,15 @@ def main():
 
         overlay_path = out_dir / f"{seq_id}_frame{frame_idx:05d}_roi_overlay.png"
         cv2.imwrite(str(overlay_path), overlay)
+
+        overlay_label = overlay.copy()
+        for i, (y, x) in enumerate(zip(*np.where(mask > 0))):
+            if i < 30:  # limit number of labels for clarity
+                cv2.putText(overlay_label, str(i), (x, y), cv2.FONT_HERSHEY_SIMPLEX,
+                            0.3, (0, 255, 255), 1)
+
+        cv2.imwrite(str(out_dir / f"{seq_id}_frame{frame_idx:05d}_roi_overlay_labelled.png"), overlay_label)
+
 
         print(" Additional mesh debug saved at:")
         print("   ", mask_path.resolve())

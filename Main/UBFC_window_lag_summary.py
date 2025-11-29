@@ -9,7 +9,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 
-from UBFC_Start_End_Seq import (
+from UBFC_Start_Seq import (
     prepare_full_signals,
     UBFC_ROOT,
 )
