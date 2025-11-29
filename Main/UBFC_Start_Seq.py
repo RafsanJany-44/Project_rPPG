@@ -19,7 +19,9 @@ from ubfc_dataset import UBFCFrameSource
 from roi_central import CentralRoiExtractor
 from roi_face_opencv import OpenCVFaceBoxRoi
 from roi_face_mediapipe import MediaPipeFaceRegionsRoi
-from roi_face_mediapipe_advanced_full_face import MediaPipeFaceMeshRoi
+from roi_face_mediapipe_advanced_full_face import MediaPipeFaceMeshRoi as MediaPipeFaceMeshRoi_FullFace
+from roi_face_mediapipe_advanced_convexHull import MediaPipeFaceMeshRoi  as MediaPipeFaceMeshRoi_ConvexHull
+from roi_face_mediapipe_advanced_f_c import MediaPipeFaceMeshRoi  as MediaPipeFaceMeshRoi_F_C
 from rgb_extractor import extract_rgb_timeseries
 from rPPG_Algorithm_Cell import rppg_chrom, bandpass_zero_phase
 
@@ -31,7 +33,7 @@ UBFC_ROOT = Path(r"D:\Data\UBFC\Dataset_3")
 WIN_LEN = 8.0
 PADDING = 1.0
 ROI_FRAC = 0.5
-ROI_MODE = "mediapipe_mesh"  # "central", "opencv_face", "mediapipe_face", or "mediapipe_mesh"
+ROI_MODE = "mediapipe_f_c"  # "central", "opencv_face", "mediapipe_face", or "mediapipe_full", "mediapipe_convexHull", "mediapipe_f_c"
 
 
 
@@ -55,9 +57,22 @@ def build_roi_extractor():
     if ROI_MODE == "mediapipe_face":
         return MediaPipeFaceRegionsRoi()
 
-    if ROI_MODE == "mediapipe_mesh":
+    if ROI_MODE == "mediapipe_full":
         # Use default shape configuration from roi_face_mediapipe_advanced.py
-        return MediaPipeFaceMeshRoi(
+        return MediaPipeFaceMeshRoi_FullFace(
+            refine_landmarks=False,
+            min_detection_confidence=0.5,
+            min_tracking_confidence=0.5,
+        )
+    
+    if ROI_MODE == "mediapipe_convexHull":
+        return MediaPipeFaceMeshRoi_ConvexHull(
+            refine_landmarks=False,
+            min_detection_confidence=0.5,
+            min_tracking_confidence=0.5,
+        )
+    if ROI_MODE == "mediapipe_f_c":
+        return MediaPipeFaceMeshRoi_F_C(
             refine_landmarks=False,
             min_detection_confidence=0.5,
             min_tracking_confidence=0.5,

@@ -16,8 +16,7 @@ import numpy as np
 from ubfc_dataset import UBFCFrameSource
 from roi_central import CentralRoiExtractor
 from roi_face_opencv import OpenCVFaceBoxRoi
-from roi_face_mediapipe import MediaPipeFaceRegionsRoi
-from roi_face_mediapipe_advanced_full_face import MediaPipeFaceMeshRoi
+from roi_face_mediapipe_advanced_f_c import MediaPipeFaceMeshRoi
 
 # ----- CONFIG -----
 UBFC_ROOT = Path(r"D:\Data\UBFC\Dataset_3")  # adjust if needed

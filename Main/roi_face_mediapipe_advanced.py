@@ -49,30 +49,30 @@ ROI_SHAPES: List[Dict[str, Any]] = [
         "indices": [454, 323, 361, 288, 397, 365, 379, 400],
     },
 
-    # Example: small triangle patch on nose (can remove if not needed)
-    # {
-    #     "name": "nose_triangle",
-    #     "type": "polygon",
-    #     "indices": [6, 195, 4],
-    # },
+    #Example: small triangle patch on nose (can remove if not needed)
+    {
+         "name": "nose_triangle",
+         "type": "polygon",
+         "indices": [6, 195, 4],
+     },
 
     # Example: circular patch around mid-forehead (can remove if not needed)
-    # {
-    #     "name": "forehead_circle",
-    #     "type": "circle",
-    #     "center_idx": 10,
-    #     "radius_px": 20,
-    # },
+    {
+         "name": "forehead_circle",
+         "type": "circle",
+         "center_idx": 10,
+         "radius_px": 20,
+    },
 
     # Example: rectangle between two landmarks (can remove if not needed)
-    # {
-    #     "name": "chin_rect",
-    #     "type": "rect_between",
-    #     "idx1": 152,   # chin bottom
-    #     "idx2": 10,    # forehead center
-    #     "x_margin": 0.3,  # horizontal expansion factor
-    #     "y_frac": 0.3,    # use fraction of the vertical span
-    # },
+    {
+         "name": "chin_rect",
+         "type": "rect_between",
+         "idx1": 152,   # chin bottom
+         "idx2": 10,    # forehead center
+         "x_margin": 0.3,  # horizontal expansion factor
+         "y_frac": 0.3,    # use fraction of the vertical span
+    },
 ]
 
 

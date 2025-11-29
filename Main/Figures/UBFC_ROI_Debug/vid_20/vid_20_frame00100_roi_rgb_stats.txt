@@ -1,7 +1,0 @@
-ROI RGB statistics (BGR order)
-seq_id        : vid_20
-frame_idx     : 100
-image_shape   : 480 x 640
-roi_pixels    : 10925
-mean_BGR      : 138.483109, 135.173920, 164.013641
-std_BGR       : 21.887327, 21.189247, 25.510597
